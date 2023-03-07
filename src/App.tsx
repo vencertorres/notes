@@ -1,34 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { format } from "date-fns"
+import { SetStateAction, useEffect, useState } from "react"
+import { Link, useRoute } from "wouter"
+
+function useLocalStorage<T>(key: string, initialValue: T): [T, React.Dispatch<SetStateAction<T>>] {
+  const [value, setValue] = useState(() => {
+    const item = window.localStorage.getItem(key)
+
+    return item
+      ? JSON.parse(item)
+      : initialValue
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
+
+  return [value, setValue]
+}
+
+type Note = {
+  id: string
+  title: string
+  body: string
+  time: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [notes, setNotes] = useLocalStorage<Note[]>("notes", [])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="grid grid-cols-[minmax(20rem,_25%)_1fr] h-screen">
+      <div className="bg-white border-r overflow-y-auto">
+        {notes.length ? (
+          <ul>
+            {notes.map(note => (
+              <li key={note.id}>
+                <NoteLink href={`/notes/${note.id}`}>
+                  <div className="p-4 border-b bg-white group-hover:bg-gray-100 group-[.active]:bg-blue-50">
+                  <p className="font-medium">{note.title}</p>
+                  <p className="truncate">{note.body}</p>
+                    <time dateTime={note.time} className="text-gray-500 text-sm">
+                    {format(new Date(note.time), "MMMM d, yyyy h:mm a")}
+                    </time>
+                  </div>
+                </NoteLink>
+              </li>
+            ))}
+          </ul> 
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-gray-500">No notes</p>
+          </div>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
 
 export default App
+
+function NoteLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const [isActive] = useRoute(href)
+
+  return (
+    <Link href={href}>
+      <a className={"group" + (isActive ? " active" : "")}>{children}</a>
+    </Link>
+  )
+}
