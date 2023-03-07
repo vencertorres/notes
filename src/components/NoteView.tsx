@@ -54,7 +54,7 @@ function NoteView({ id, notes, submit }: { id: string | undefined; notes: Note[]
               name="title"
               placeholder="Title" value={note.title}
               onChange={handleChange}
-              className="block h-14 text-4xl outline-none"
+              className="block w-full h-14 text-4xl outline-none"
             />
             <time dateTime={note.time} className="text-gray-500 text-xs">
               {format(new Date(note.time), "MMMM d, yyyy h:mm a")}
