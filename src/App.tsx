@@ -29,8 +29,8 @@ function App() {
   const [notes, setNotes] = useLocalStorage<Note[]>("notes", [])
 
   return (
-    <div className="grid grid-cols-[minmax(20rem,_25%)_1fr] h-screen">
-      <div className="bg-white border-r overflow-y-auto">
+    <div className="h-screen">
+      <div className="h-full w-full md:w-80 bg-gray-50 border-r overflow-y-auto">
         {notes.length ? (
           <ul>
             {notes.map(note => (
@@ -49,7 +49,7 @@ function App() {
           </ul> 
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <p className="text-gray-500">No notes</p>
+            <p className="text-gray-500">No items</p>
           </div>
         )}
       </div>
