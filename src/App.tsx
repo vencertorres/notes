@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useLocation } from "wouter"
 import MaterialSymbolsAddNotesRounded from "~icons/material-symbols/add-notes-rounded"
 import NoteLink from "./components/NoteLink"
-import NoteView from "./components/NoteView"
+import NoteRoute from "./components/NoteRoute"
 import { useLocalStorage } from "./hooks"
 import { Note } from "./types"
 
@@ -77,7 +77,7 @@ function App() {
           </div>
         )}
       </div>
-      <NoteView notes={notes} submit={setNotes} />
+      <NoteRoute notes={notes} submit={setNotes} />
     </div>
   )
 }

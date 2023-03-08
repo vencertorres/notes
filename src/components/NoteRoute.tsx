@@ -7,7 +7,7 @@ import MaterialSymbolsMenuRounded from "~icons/material-symbols/menu-rounded"
 import MaterialSymbolsSaveRounded from "~icons/material-symbols/save-rounded"
 import { Note } from "../types"
 
-function NoteView({ notes, submit }: { notes: Note[]; submit: React.Dispatch<SetStateAction<Note[]>> }) {
+function NoteRoute({ notes, submit }: { notes: Note[]; submit: React.Dispatch<SetStateAction<Note[]>> }) {
   const [match, params] = useRoute("/notes/:id")
   const nodeRef = useRef(null)
   const [note, setNote] = useState<Note>({ id: "", title: "", body: "", time: new Date().toJSON() })
@@ -97,4 +97,4 @@ function NoteView({ notes, submit }: { notes: Note[]; submit: React.Dispatch<Set
   )
 }
 
-export default NoteView
+export default NoteRoute
