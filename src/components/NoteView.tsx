@@ -41,12 +41,10 @@ function NoteView({ notes, submit }: { notes: Note[]; submit: React.Dispatch<Set
     }
   }
 
-  const duration = 300
-  
   const className =
     "fixed sm:static top-0 left-0 bottom-0 right-0 "
     + "flex flex-col gap-4 p-4 bg-white "
-    + `transition-transform sm:transition-none sm:translate-x-0 duration-${duration} `
+    + "transition-transform sm:transition-none sm:translate-x-0 duration-300 "
 
   const classNames: Record<TransitionStatus, string> = {
     entering: "translate-x-0",
@@ -57,7 +55,7 @@ function NoteView({ notes, submit }: { notes: Note[]; submit: React.Dispatch<Set
   }
 
   return (
-    <Transition nodeRef={nodeRef} timeout={duration} in={match} unmountOnExit>
+    <Transition nodeRef={nodeRef} timeout={{ appear: 300, enter: 300, exit: 50 }} in={match} unmountOnExit>
       {(state: TransitionStatus) => (
         <div ref={nodeRef} className={className + classNames[state]}>
           <Link href="/">
