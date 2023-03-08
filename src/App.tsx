@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import { Route, useLocation } from "wouter"
+import { useLocation } from "wouter"
 import MaterialSymbolsAddNotesRounded from "~icons/material-symbols/add-notes-rounded"
 import NoteLink from "./components/NoteLink"
 import NoteView from "./components/NoteView"
@@ -28,7 +28,8 @@ function App() {
           <input
             type="search"
             placeholder="Search note"
-            className="w-full px-4 py-2 mr-auto border rounded-full bg-gray-100 outline-none" />
+            className="w-full px-4 py-2 mr-auto border rounded-full bg-gray-100 outline-none"
+          />
           <button title="Create note" onClick={createNote} className="text-blue-500 hover:text-blue-700">
             <MaterialSymbolsAddNotesRounded className="w-6 h-6" />
           </button>
@@ -55,13 +56,9 @@ function App() {
           </div>
         )}
       </div>
-      <Route path="/notes/:id">
-        {params => <NoteView id={params.id} notes={notes} submit={setNotes} />}
-      </Route>
+      <NoteView notes={notes} submit={setNotes} />
     </div>
   )
 }
 
 export default App
-
-
