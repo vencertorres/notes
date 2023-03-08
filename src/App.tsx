@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="sm:grid grid-cols-[20rem,_1fr] h-screen overflow-y-auto">
-      <div className="sm:w-80 bg-white border-r overflow-y-auto">
+      <div className="flex flex-col sm:w-80 bg-white border-r overflow-y-auto">
         <div className="flex gap-4 p-4 border-b">
           <input
             type="search"
