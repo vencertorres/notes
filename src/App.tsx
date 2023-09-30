@@ -57,11 +57,8 @@ function App() {
 						value={query}
 						onChange={search}
 					/>
-					<button
-						title="Create note"
-						onClick={createNote}
-						className="text-sky-500 hover:text-sky-600"
-					>
+					<button onClick={createNote} className="text-sky-500 hover:text-sky-600">
+						<span className="sr-only">Create note</span>
 						<LucideEdit aria-label="Create note" />
 					</button>
 				</div>
