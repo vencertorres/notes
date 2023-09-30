@@ -12,8 +12,11 @@ export default function Note(props: NoteProps) {
 				<div className="border-b bg-white p-4 group-hover:bg-gray-50 group-aria-[current=true]:bg-sky-50">
 					<p>{props.title}</p>
 					<p className="truncate text-gray-500">{props.body}</p>
-					<time dateTime={props.time} className="text-xs text-gray-500">
-						{format(new Date(props.time), 'MMMM d, yyyy h:mm a')}
+					<time
+						dateTime={format(props.createdAt, 'yyyy-mm-dd')}
+						className="text-xs text-gray-500"
+					>
+						{format(props.createdAt, 'MMMM d, yyyy h:mm a')}
 					</time>
 				</div>
 			</a>

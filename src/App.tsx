@@ -1,24 +1,26 @@
 import { useState } from 'react';
-import { useLocation } from 'wouter';
+import { Route, useLocation } from 'wouter';
 import LucideEdit from '~icons/lucide/edit';
+import Editor from './components/Editor';
 import Note from './components/Note';
-import NoteRoute from './components/NoteRoute';
 import { useLocalStorage } from './hooks';
 import { NoteProps } from './types';
 
 function App() {
 	const [notes, setNotes] = useLocalStorage<NoteProps[]>('notes', []);
-	const [location, setLocation] = useLocation();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [_, setLocation] = useLocation();
 	const [query, setQuery] = useState(() => {
 		return new URLSearchParams(window.location.search).get('q') ?? '';
 	});
 
 	function createNote() {
 		const note = {
-			id: Math.random().toString(36).slice(2, 7),
+			id: crypto.randomUUID(),
 			title: '',
 			body: '',
-			time: new Date().toJSON()
+			createdAt: new Date(),
+			updatedAt: new Date()
 		};
 		setNotes(notes.concat(note));
 		setLocation(`/notes/${note.id}`);
@@ -29,7 +31,7 @@ function App() {
 		setQuery(event.target.value);
 	}
 
-	let list = query
+	const list = query
 		? notes.filter((note) => {
 				if (
 					note.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -42,8 +44,8 @@ function App() {
 
 	return (
 		<div className="grid h-screen grid-cols-1 overflow-y-auto bg-white sm:grid-cols-[minmax(250px,_20%)_1fr]">
-			<div className="grid grid-rows-[auto_1fr] overflow-y-auto border-r border-slate-300">
-				<div className="grid grid-cols-[1fr_auto] gap-3 border-b border-slate-300 p-3">
+			<aside className="grid grid-rows-[auto_1fr] overflow-y-auto border-r border-slate-300">
+				<div className="grid grid-cols-[1fr_auto] gap-3 px-4 py-6">
 					<label htmlFor="search" className="sr-only">
 						Search note
 					</label>
@@ -51,7 +53,7 @@ function App() {
 						id="search"
 						type="search"
 						placeholder="Search note"
-						className="min-w-0 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm placeholder-slate-400 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+						className="min-w-0 rounded-full border border-slate-300 bg-white px-3 py-1 text-sm placeholder-slate-400 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
 						value={query}
 						onChange={search}
 					/>
@@ -63,7 +65,7 @@ function App() {
 						<LucideEdit aria-label="Create note" />
 					</button>
 				</div>
-				{!!list.length ? (
+				{list.length ? (
 					<div className="overflow-hidden">
 						{list.map((note) => (
 							<Note key={note.id} {...note} />
@@ -74,8 +76,22 @@ function App() {
 						<p className="text-gray-500">No items</p>
 					</div>
 				)}
-			</div>
-			<NoteRoute notes={notes} submit={setNotes} />
+			</aside>
+
+			<Route path="/notes/:id">
+				{(params) => {
+					const note = notes.find((note) => note.id === params.id);
+
+					if (!note) {
+						return (
+							<div className="grid place-items-center text-xl text-gray-500">
+								¯\_(ツ)_/¯
+							</div>
+						);
+					}
+					return <Editor note={note} update={setNotes} />;
+				}}
+			</Route>
 		</div>
 	);
 }
