@@ -71,6 +71,7 @@ function Editor({
 						placeholder="Title"
 						defaultValue={note.title}
 						className="w-full resize-none p-6 text-4xl font-semibold shadow outline-none"
+						spellCheck="false"
 					/>
 				</div>
 				<div className="flex flex-col">
@@ -78,6 +79,7 @@ function Editor({
 						name="body"
 						defaultValue={note.body}
 						className="flex-1 resize-none p-6 outline-none"
+						spellCheck="false"
 					/>
 				</div>
 			</form>
