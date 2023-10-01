@@ -59,7 +59,7 @@ function App() {
 					/>
 					<button onClick={createNote} className="text-sky-500 hover:text-sky-600">
 						<span className="sr-only">Create note</span>
-						<LucideEdit aria-label="Create note" />
+						<LucideEdit aria-hidden="true" />
 					</button>
 				</div>
 				{list.length ? (
