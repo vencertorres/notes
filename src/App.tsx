@@ -4,7 +4,6 @@ import Editor from './components/Editor';
 import Sidebar from './components/Sidebar';
 import { useLocalStorage } from './lib/hooks';
 import { NoteProps } from './lib/types';
-import LucideStickyNote from '~icons/lucide/sticky-note';
 
 export default function App() {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,7 +17,7 @@ export default function App() {
 			<Sidebar notes={notes} setNotes={setNotes} />
 
 			<AnimatePresence>
-				{note ? (
+				{note && (
 					<motion.div
 						initial={{ x: '100vw' }}
 						animate={{ x: '0vw' }}
@@ -28,10 +27,6 @@ export default function App() {
 					>
 						<Editor note={note} update={setNotes} />
 					</motion.div>
-				) : (
-					<div className="grid place-items-center">
-						<LucideStickyNote className="text-8xl text-gray-100" />
-					</div>
 				)}
 			</AnimatePresence>
 		</div>
