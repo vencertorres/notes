@@ -6,14 +6,14 @@ Note taking app built with [React](https://reactjs.org/) + [wouter](https://gith
 
 ```bash
 # install dependencies
-npm install
+pnpm install
 
 # serve in dev mode
-npm run dev
+pnpm run dev
 
 # build for production
-npm run build
+pnpm run build
 
 # serve in production mode
-npm preview
+pnpm preview
 ```
