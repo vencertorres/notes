@@ -1,18 +1,12 @@
-import { Dispatch, FormEvent, SetStateAction } from 'react';
+import { FormEvent } from 'react';
 import TextArea from 'react-textarea-autosize';
 import { Link, useLocation } from 'wouter';
 import LucideChevronLeft from '~icons/lucide/chevron-left';
 import LucideSave from '~icons/lucide/save';
 import LucideTrash from '~icons/lucide/trash';
-import { NoteProps } from '../types';
+import { EditorProps } from '../lib/types';
 
-function Editor({
-	note,
-	update
-}: {
-	note: NoteProps;
-	update: Dispatch<SetStateAction<NoteProps[]>>;
-}) {
+function Editor({ note, update }: EditorProps) {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [_, setLocation] = useLocation();
 

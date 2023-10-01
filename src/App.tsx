@@ -3,8 +3,8 @@ import { Route, useLocation } from 'wouter';
 import LucideEdit from '~icons/lucide/edit';
 import Editor from './components/Editor';
 import Note from './components/Note';
-import { useLocalStorage } from './hooks';
-import { NoteProps } from './types';
+import { useLocalStorage } from './lib/hooks';
+import { NoteProps } from './lib/types';
 
 function App() {
 	const [notes, setNotes] = useLocalStorage<NoteProps[]>('notes', []);

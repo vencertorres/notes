@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { Link, useRoute } from 'wouter';
-import { NoteProps } from '../types';
+import { NoteProps } from '../lib/types';
 
 export default function Note(props: NoteProps) {
 	const href = `/notes/${props.id}`;
