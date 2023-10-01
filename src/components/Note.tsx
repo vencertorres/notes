@@ -10,8 +10,7 @@ export default function Note(props: NoteProps) {
 		<Link href={href}>
 			<a className="group" aria-current={isActive}>
 				<div className="border-b bg-white p-4 group-hover:bg-gray-50 group-aria-[current=true]:bg-sky-50">
-					<p>{props.title}</p>
-					<p className="truncate text-gray-500">{props.body}</p>
+					<p className="truncate">{props.title || 'Untitled'}</p>
 					<time
 						dateTime={format(props.createdAt, 'yyyy-mm-dd')}
 						className="text-xs text-gray-500"

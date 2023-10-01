@@ -6,7 +6,7 @@ import LucideSave from '~icons/lucide/save';
 import LucideTrash from '~icons/lucide/trash';
 import { EditorProps } from '../lib/types';
 
-function Editor({ note, update }: EditorProps) {
+export default function Editor({ note, update }: EditorProps) {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [_, setLocation] = useLocation();
 
@@ -30,18 +30,18 @@ function Editor({ note, update }: EditorProps) {
 	}
 
 	function deleteNote() {
-		if (confirm('Delete note?')) {
+		if (confirm('Delete note')) {
 			update((notes) => notes.filter((n) => n.id !== note.id));
 			setLocation('/');
 		}
 	}
 
 	return (
-		<main className="grid grid-rows-[auto_1fr] overflow-auto">
+		<>
 			<div className="flex items-center gap-4 p-6">
-				<Link href="/">
+				<Link href="/" replace={true}>
 					<a className="inline-flex items-center text-gray-500 hover:text-gray-700 sm:hidden">
-						<LucideChevronLeft className="-ml-2 text-2xl" />
+						<LucideChevronLeft className="-ml-2 text-2xl" aria-hidden="true" />
 						Notes
 					</a>
 				</Link>
@@ -54,11 +54,7 @@ function Editor({ note, update }: EditorProps) {
 					<LucideTrash className="text-gray-500 hover:text-red-700" aria-hidden="true" />
 				</button>
 			</div>
-			<form
-				id="editor"
-				className="grid grid-rows-[auto_1fr] overflow-auto"
-				onSubmit={saveNote}
-			>
+			<form id="editor" className="grid h-full grid-rows-[auto_1fr]" onSubmit={saveNote}>
 				<div>
 					<TextArea
 						name="title"
@@ -77,8 +73,6 @@ function Editor({ note, update }: EditorProps) {
 					/>
 				</div>
 			</form>
-		</main>
+		</>
 	);
 }
-
-export default Editor;
