@@ -8,6 +8,11 @@ export interface NoteProps {
 	updatedAt: Date;
 }
 
+export interface SideBarProps {
+	notes: NoteProps[];
+	setNotes: Dispatch<React.SetStateAction<NoteProps[]>>;
+}
+
 export interface EditorProps {
 	note: NoteProps;
 	update: Dispatch<SetStateAction<NoteProps[]>>;

@@ -1,21 +1,10 @@
-import { Dispatch, useState } from 'react';
-import { useLocation } from 'wouter';
+import { navigate, useLocationProperty } from 'wouter/use-location';
 import LucideEdit from '~icons/lucide/edit';
-import { NoteProps } from '../lib/types';
+import { SideBarProps } from '../lib/types';
 import Note from './Note';
 
-export default function Sidebar({
-	notes,
-	setNotes
-}: {
-	notes: NoteProps[];
-	setNotes: Dispatch<React.SetStateAction<NoteProps[]>>;
-}) {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [_, setLocation] = useLocation();
-	const [query, setQuery] = useState(() => {
-		return new URLSearchParams(window.location.search).get('q') ?? '';
-	});
+export default function Sidebar({ notes, setNotes }: SideBarProps) {
+	const query = useLocationProperty(() => new URLSearchParams(window.location.search).get('s'));
 
 	function createNote() {
 		const note = {
@@ -26,12 +15,13 @@ export default function Sidebar({
 			updatedAt: new Date()
 		};
 		setNotes(notes.concat(note));
-		setLocation(`/notes/${note.id}`);
+		navigate(`/notes/${note.id}`);
 	}
 
 	function search(event: React.ChangeEvent<HTMLInputElement>) {
-		setLocation(event.target.value ? `/?q=${event.target.value}` : '/', { replace: true });
-		setQuery(event.target.value);
+		const params = new URLSearchParams(window.location.search);
+		params.set('s', event.target.value);
+		navigate('?' + params.toString(), { replace: true });
 	}
 
 	const list = query
@@ -56,7 +46,7 @@ export default function Sidebar({
 					type="search"
 					placeholder="Search note"
 					className="min-w-0 rounded-full border border-slate-300 bg-white px-3 py-1 text-sm placeholder-slate-400 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-					value={query}
+					value={query ?? ''}
 					onChange={search}
 				/>
 				<button onClick={createNote} className="text-sky-500 hover:text-sky-600">
